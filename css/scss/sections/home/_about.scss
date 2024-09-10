@@ -1,0 +1,102 @@
+.about {
+    padding: $padding-small;
+    .container {
+        display: block;
+        padding: 0;
+        @include desktop {
+            display: flex;
+            gap: 30px;
+           
+        }
+
+        .about-content {
+            flex: 1;
+            text-align: center;
+            @include desktop {
+                text-align: left;
+            }
+        }
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+    h4 {
+        font-size: 20px;
+        font-weight: 400;
+        font-style: italic;
+    }
+    p {
+        padding-top: 5px;
+    }
+    text-align: center;
+    @include tablet {
+        h2 {
+            font-size: 30px;
+        }
+        h4 {
+            font-size: 20px;
+        }
+        
+    }
+
+    @include desktop {
+        padding: $padding-large 0;  
+    }
+    .callback-form {
+       
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        
+        @include tablet {
+            margin: 0 auto; 
+           
+        }
+
+        @include desktop {
+            width: 470px;
+            margin-top: -150px; 
+           
+        }
+        .form-title {
+          padding: 20px 0;  
+            h3 {
+                padding: $padding-extra-small $padding-medium ;
+                margin: 0;
+                color: var(--color-accent);
+                text-align: left;
+            }
+        }
+        p {
+            font-style: italic;
+            padding: 0;
+            padding: 15px 10px;
+        }
+
+        form {
+            flex: 1;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+    }
+    .inputgroup {
+
+        select {
+            padding: 15px 25px 15px 15px;
+
+            .color-gray {
+                color: var(--color-gray-dark);
+            }
+        }
+
+        i {
+            right: 15px;
+            color: var(--color-gray-dark);
+        }
+    }
+   
+    
+}

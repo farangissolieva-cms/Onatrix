@@ -1,0 +1,49 @@
+.title-bar {
+    padding: $padding-medium 0;
+    position: relative;
+    @include desktop {
+        padding: $padding-large 0;
+    }
+
+    .container {
+        margin: 0 auto;
+        text-align: center;
+        i {
+            font-size: 12px;
+        }
+       
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            gap: 20px;
+            a {
+                color: var(--color-dark) !important;
+            }
+            p {
+                margin: 0;
+                padding: 0;
+                color: var(--color-secondary) !important;
+                padding-top: 2px;
+            }
+        }
+    }
+
+    .decor-down, .decor-up {
+        position: absolute;
+        display: none;
+
+        @include desktop {
+            display: block;
+        }
+    }
+
+    .decor-down {
+        bottom: 0;
+        left: 0;
+    }
+    .decor-up {
+        top: 0;
+        right: 0;
+    }
+}

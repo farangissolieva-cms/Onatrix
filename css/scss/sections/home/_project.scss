@@ -1,0 +1,76 @@
+.projects {
+    padding-top: $padding-medium;
+    
+    @include desktop {
+        padding-top: 260px;
+        text-align: left;
+    }
+    .container {
+        text-align: center;
+        @include desktop {
+            text-align: left;
+        }
+    }
+    .project-cards {
+        position: relative;
+        display: block;
+        cursor: pointer;
+     
+        @include tablet {
+            display: flex;
+            
+        }
+        .project-card {
+            position: relative;
+            img {
+                transition: transform 0.3s ease;
+                width: 100%;
+            }
+            .info {
+                display: flex;
+                gap: 30px;
+                align-items: center;
+                padding: 15px;
+                position: absolute;
+                bottom: 20px;
+                background-color: rgba(79, 89, 85, 0.5) ;
+                width: 100%;
+                transition: background-color 0.3s ease;
+                .info-text {
+                    h5, p {
+                        color: var(--color-light);
+                        font-weight: 400;
+                        
+                    }
+                   
+                     
+                }
+                i {
+                    display: none;
+                    transition: display 0.3s ease;
+                } 
+               
+            }
+    
+            &:hover {
+                .info {
+                    background-color: rgba(79, 89, 85, 1) ;
+                    padding: 30px 20px;
+                    h5 {
+                        color: var(--color-secondary);
+                      
+                    }
+                    i {
+                        display: block;
+                        font-size: 30px;
+                        font-weight: 800;
+                        color: var(--color-light);
+                    } 
+                }
+        
+                
+            }
+        }
+        
+    }
+}
