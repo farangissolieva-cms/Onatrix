@@ -1,0 +1,51 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
+
+@{ 
+    var selection = Model.Root().Children.Where(x => x.IsVisible(PublishedValueFallback)).ToArray(); 
+    var rootContents = UmbracoHelper.ContentAtRoot();
+    var settings = rootContents?.FirstOrDefault(x=> x.ContentType.Alias == "settingsPage") ?? null;
+    var siteName = settings?.Value<string>("siteName") ?? "";
+    var siteLogotype = settings?.Value<IPublishedContent>("siteLogotype")?.Url() ?? "";
+}
+
+
+<header>
+    <div class="nav-bar bg-light">
+        <div  class="container">
+            <div class="logo">
+                <a href="/"><img src="@siteLogotype" alt="@siteName"></a>
+            </div>
+            <button class="btn-mobile btn-menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="menu">
+                <nav>
+                    @if (selection?.Length > 0)
+                    {
+                    @foreach (var item in selection)
+                        {
+                            <a class="@(item.IsAncestorOrSelf(Model) ? "menu-link active" : "menu-link")" href="@item.Url(PublishedUrlProvider)">@item.Name</a>
+                        }
+                    }
+                </nav>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search..." />
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+        </div>
+        
+    </div>
+    <div id="menu-overlay"></div>
+</header>

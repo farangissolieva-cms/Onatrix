@@ -1,0 +1,44 @@
+﻿.page-title {
+    padding-top: 30px;
+    padding-bottom: 70px;
+    .container {
+        text-align: center;
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            ul, li {
+                list-style-type: none;
+            }
+
+            @include desktop {
+                width: 100%;
+            }
+
+            a {
+                color: var(--color-dark);
+            }
+
+            li {
+                
+                &:not(:last-child)::after {
+                    content: '>';
+                    margin: 0 0.8rem;
+                  
+                }
+             
+
+                &:last-child {
+                    color: var(--color-secondary); 
+                }
+            }
+        }
+    }
+}

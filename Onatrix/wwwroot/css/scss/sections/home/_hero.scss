@@ -1,0 +1,51 @@
+#hero-slider {
+    position: relative;
+    overflow: hidden;
+
+
+    .container {
+        position: relative;
+        padding: $padding-small;
+        z-index: 1;
+        align-items: center;
+
+        @include tablet {
+            padding: $padding-extra-large 0;
+        }
+
+        h1 {
+            font-size: 40px;
+
+            @include desktop {
+                font-size: 70px;
+            }
+        }
+
+        p {
+            padding-bottom: 30px;
+        }
+
+        .hero-content {
+            text-align: center;
+
+            @include desktop {
+                text-align: left;
+            }
+        }
+    }
+       
+
+    .background-img {
+        display: none;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        z-index: -1;
+
+        @include desktop {
+            display: block;
+        }
+    }
+}

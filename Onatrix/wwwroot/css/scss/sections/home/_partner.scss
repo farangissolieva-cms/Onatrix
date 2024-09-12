@@ -1,0 +1,29 @@
+#partner {
+    padding: $padding-large 0;
+
+    @include desktop {
+        padding: $padding-extra-large 0;
+    }
+
+    .container {
+        padding: 0;
+
+        .image-slider {
+            .slides {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                gap: $gap;
+                justify-items: center;
+
+                @include tablet {
+                    grid-template-columns: repeat(3, 1fr);
+                    justify-items: start;
+                }
+
+                @include desktop {
+                    grid-template-columns: repeat(6, 1fr);
+                }
+            }
+        }
+    }
+}

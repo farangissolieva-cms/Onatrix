@@ -1,0 +1,40 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
+@{
+	Layout = null;
+    var rootContents = UmbracoHelper.ContentAtRoot();
+    var settings = rootContents?.FirstOrDefault(x=> x.ContentType.Alias == "settingsPage") ?? null;
+    var siteName = settings?.Value<string>("siteName") ?? "Onatrix - Financial Solutions";
+
+    var pageTitle = !string.IsNullOrEmpty(ViewBag?.Title) ? $"{ViewBag?.Title} | {siteName}" : $"{siteName}"; 
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@pageTitle</title>
+    <script defer src="https://kit.fontawesome.com/a576612222.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="@Url.Content("~/css/scss/main.css")">
+    <link rel="stylesheet" href="@Url.Content("~/css/scss/colors/theme.css")">
+
+</head>
+
+<body>
+  <div class="wrapper">
+    @await Html.PartialAsync("partials/static/topbar.cshtml")
+     @await Html.PartialAsync("partials/static/header.cshtml")
+    <main>
+        @RenderBody()
+    </main>
+     @await Html.PartialAsync("partials/static/footer.cshtml")
+  </div>
+  <script src="/js/script.js"></script>
+
+</body>
+
+</html>
