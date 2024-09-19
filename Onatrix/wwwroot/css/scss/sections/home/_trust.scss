@@ -1,21 +1,28 @@
-.trust {
-    padding: $padding-medium 0;
-    @include desktop {
-        padding-top: $padding-extra-large;
-        padding-bottom: 0;
-    }
+#why-choose-us {
+    padding-bottom: 0;
+    
     .container {
         position: relative;
         text-align: center;
+
+
         h2 {
-            h2 {
-                font-size: 20px;
-                @include desktop {
-                    font-size: 40px;
-                }
+            font-size: 20px;
+            margin: 0;
+
+            @include desktop {
+                font-size: 40px;
             }
         }
-        .background, .client-img {
+
+
+        span {
+            font-size: 40px;
+            @include heading;
+            margin-bottom: 40px;
+        }
+
+        .background-img, .client-img {
             display: none;
 
             @include desktop {
@@ -23,21 +30,22 @@
             }
         }
 
-        .background {
+        .background-img {
             position: absolute;
             top: 62px;
             left: 50%;
-            transform: translateX(-50%); 
+            transform: translateX(-50%);
             z-index: -1;
-            
         }
-        .client-img {
+
+        img {
             padding-top: 100px;
             width: 100%;
         }
+
         p {
-            margin: 0 auto;
+            margin: 20px auto;
             width: 50%;
-         }
+        }
     }
 }

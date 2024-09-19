@@ -1,0 +1,38 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
+@{
+	Layout = "mainLayout.cshtml";
+    ViewBag.Title = Model?.Name;
+    
+    var rootContents = UmbracoHelper.ContentAtRoot();
+    var siteRoot = rootContents?.FirstOrDefault();   
+      
+    var serviceListPage = siteRoot?.DescendantsOrSelf().FirstOrDefault(x => x.ContentType.Alias == "serviceListPage");
+       
+    var formTitle = serviceListPage?.Value<string>("formTitle") ?? "";
+    var formImg = serviceListPage?.Value<IPublishedContent>("formImage")?.Url();
+    var formDescription = serviceListPage?.Value<string>("formDescription") ?? "";
+}
+
+
+<section class="service-detail">
+    
+    <div class="container">
+         <aside>
+            <div class="about-us-form">
+                <h4>@formTitle</h4>
+                <img src="@formImg" alt="about us" />
+                <p>@formDescription</p>
+            </div>
+           
+            @await Html.PartialAsync("partials/static/helpForm.cshtml")
+        </aside>
+        <div class="content">
+            @Model?.Value("pageContent")
+        </div>
+        
+    </div>
+</section>
+ @await Html.PartialAsync("partials/static/contacts.cshtml")

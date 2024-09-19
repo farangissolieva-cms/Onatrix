@@ -27,7 +27,10 @@
 <body>
   <div class="wrapper">
     @await Html.PartialAsync("partials/static/topbar.cshtml")
-     @await Html.PartialAsync("partials/static/header.cshtml")
+    @await Html.PartialAsync("partials/static/header.cshtml")
+    @if (!string.IsNullOrEmpty(ViewBag.Title)){
+     @await Html.PartialAsync("partials/static/breadcrumb.cshtml")
+    }
     <main>
         @RenderBody()
     </main>

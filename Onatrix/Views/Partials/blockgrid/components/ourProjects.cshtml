@@ -1,0 +1,54 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
+@{
+	var sectionTitle = Model?.Content.Value<string>("sectionTitle") ?? "";
+	var headline =  Model?.Content.Value<string>("headline") ?? "";
+	
+	var colorLabel = Model?.Content?.Value<ColorPickerValueConverter.PickedColor>("backgroundColor")?.Label.ToLower() ?? null;
+	var backgroundColorClass = !string.IsNullOrEmpty(colorLabel) ? $"bg-{colorLabel}" : "bg-light";
+
+	var selection = Umbraco.Content(Guid.Parse("03b5a2b9-8ad2-4866-bfef-b64a276dcdd1"))
+    .ChildrenOfType("projectItemTemplate")
+    .Where(x => x.IsVisible())
+	.Take(4);
+}
+
+ <section class="projects @backgroundColorClass">
+            
+	<div class="container ">   
+        <h6>@sectionTitle</h6>
+        <h2>@headline</h2>
+    </div>
+
+    <div class="project-cards">
+        @if (selection != null) {
+            @foreach (var item in selection)
+            {
+                var image = item?.Value<IPublishedContent>("slideImage")?.Url() ?? "";
+                var category = item?.Value<string>("projectCategory") ?? "";
+                <a href="@item!.Url()">
+                    <div class="project-card">
+                        <img src="@image" alt="@item.Name()">
+                        <div class="info">
+                            <div class="info-text">
+                                <h5>@item.Name()</h5>
+                                <p>@category</p>
+                            </div>
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                </a>
+              
+            }
+        }
+        
+    </div>
+
+	
+</section>
+
+ 
+
+

@@ -10,12 +10,13 @@
     select, input {
         display: grid;
         padding: 1rem;
-        padding-left: 40px;
-        border-radius: 0.1rem !important;
+        border-radius: 0.2rem !important;
         border: 0.063rem solid var(--color-gray-dark);
 
         &::placeholder {
             opacity: 0.6;
+            font-style: italic;
+            font-size: 13px;
         }
 
         @include desktop {
@@ -38,9 +39,9 @@
     i {
         position: absolute;
         top: 50%;
-        right: 10px;
+        right: 1rem;
         transform: translateY(-50%);
         font-size: 18px;
-        color: var(--color-gray);
+        color: var(--color-primary);
     }
 }

@@ -1,0 +1,80 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "mainLayout.cshtml";
+	ViewBag.Title = Model?.Value("pageTitle") ?? null;
+
+	var selection = Umbraco.Content(Guid.Parse("e9938c0e-2868-425c-af11-5e5794ed4593"))
+    .ChildrenOfType("serviceItemTemplate")
+    .Where(x => x.IsVisible());
+
+    var itemPerPage = 6;
+    if (!int.TryParse(Context.Request.Query["page"], out int currentPage))
+        currentPage = 1;
+    var totalItems = selection?.Count() ?? 0;
+    var pageItem = selection?.Skip((currentPage-1)*itemPerPage).Take(itemPerPage);
+
+}
+
+ <section class="services ">
+            
+	<div class="container ">
+		
+        @if (!string.IsNullOrEmpty(Model.Value("customHeadline").ToString())){
+			<div class="headline">
+                <h2>@Model.Value("customHeadline")</h2>
+             </div>
+		}
+       
+		
+		
+		<div class="service-cards">
+			@if (pageItem != null) {
+                @foreach (var item in pageItem)
+                {
+                    var image = item?.Value<IPublishedContent>("thumbnailImage")?.Url() ?? "";
+                    var preamble = item?.Value<string>("preable") ?? "";
+                    <a class="link-animation" href="@item.Url()">
+                        <div class="service-card bg-light">
+                            <h4>@item.Name()</h4>
+                            <img src="@image" alt="@item.Name()">
+                            <p>@preamble</p>
+                        </div>
+                    </a>	
+                
+                }
+            }
+            
+		</div>
+
+        <section class="pagination">
+            <div class="pagination-container">
+
+                @if (currentPage > 1) {
+                    <a href="?page=@(currentPage-1)" class="change">Prev</a>
+                }
+                else {
+                    <span class="change inactive">Prev</span>
+                }
+
+                <ul class="pages">
+                    @for (int i=1; i <= Math.Ceiling((decimal)totalItems / itemPerPage); i++) {
+                        <li class="@((i== currentPage) ? "number active" : "number")">
+                            <a href="?page=@i">@i</a>
+                        </li>
+                    }
+                </ul>
+
+                 @if (currentPage < Math.Ceiling((decimal)totalItems / itemPerPage)) {
+                    <a href="?page=@(currentPage + 1)" class="change">Next</a>
+                }
+                else {
+                    <span class="change inactive">Next</span>
+                }
+
+            </div>
+        </section>
+	</div>
+</section>
+ @await Html.PartialAsync("partials/static/contacts.cshtml")
+

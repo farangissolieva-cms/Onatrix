@@ -10,19 +10,15 @@
     var spacingBottomClass = (Model!.Content.Value<bool>("addSpaceToBottom")) ? "spacing-bottom" : "";
     var centerContentClass = (Model!.Content.Value<bool>("centerContentOnPage")) ? "center" : "";
 
-    var sectionBackgroundColorLabel = Model?.Content?.Value<ColorPickerValueConverter.PickedColor>("sectionBackgroungColor")?.Label.ToLower() ?? null;
+    var sectionBackgroundColorLabel = Model?.Content?.Value<ColorPickerValueConverter.PickedColor>("sectionBackgroundColor")?.Label.ToLower() ?? null;
     var backgroundColorClass = (!string.IsNullOrEmpty(sectionBackgroundColorLabel) && sectionBackgroundColorLabel != "none") ? $"bg-{sectionBackgroundColorLabel}" : "";
 
     var sectionBackgroundImage = Model?.Content.Value<IPublishedContent>("sectionBackgroundImage")?.Url() ?? null;
 }
 
 
-<section id="@sectionId" class="@spacingTopClass @spacingBottomClass">
-    
-    @if (!string.IsNullOrEmpty(backgroundColorClass)) {
-        <div class="backgroundColorClass"></div>
-    }
-    
+<section id="@sectionId" class="@spacingTopClass @spacingBottomClass @backgroundColorClass">
+     
     <div class="container @centerContentClass">
         
         @if (!string.IsNullOrEmpty(sectionBackgroundImage)) {

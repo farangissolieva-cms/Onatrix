@@ -1,59 +1,23 @@
-.about-hero {
-    padding: $padding-medium $padding-small ;
+#founder {
+    padding: $padding-small;
     position: relative;
+
     @include desktop {
         padding: $padding-extra-large 0;
     }
+
     .container {
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            justify-content: center;
-            text-align: center;
-
-            @include tablet {
-                display: flex;
-                justify-content: left;
-                text-align: left;
-                gap: $gap;
-            }
-          
-            
-            .img-container {
-                display: block;
-                img {
-                    width: 100%;
-                    @include desktop {
-                        width: 400px;
-                    }
-                }
-                
-                p {
-                    padding-top: 15px;
-                }
-            }
-            .about-text {
-               padding: 15px;
-                
-               @include tablet {
-                width: 80%;
-                padding: 0;
-               }
-
-               @include desktop {
-                    width: 50%;
-                    
-                }
-                blockquote {
-                    padding-bottom: 35px;
-                    font-style: italic;
-                    font-size: 20px;
-                }
-                p {
-                    padding-bottom: 25px;
-                }
+        img {
+            width: 100%;
+            padding-bottom: 15px;
+                        
+            @include desktop {
+                width: 70%
             }
         }
-        
+
+        p {
+            padding-bottom: 25px;
+        }
     }
 }

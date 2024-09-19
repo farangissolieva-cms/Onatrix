@@ -1,0 +1,35 @@
+﻿.service-detail {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        padding: 3rem 0;
+
+        aside {
+            .about-us-form {
+                p {
+                    padding-top: 1.5rem;
+                }
+            }
+
+            padding: 0 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            padding-left: 4rem;
+            border-left: 2px solid var(--color-gray);
+
+            p {
+                width: 100%;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

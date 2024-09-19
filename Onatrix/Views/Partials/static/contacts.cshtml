@@ -1,0 +1,46 @@
+﻿@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
+
+
+@{
+       
+    var rootContents = UmbracoHelper.ContentAtRoot();
+    var settings = rootContents?.FirstOrDefault(x=> x.ContentType.Alias == "settingsPage") ?? null;
+    var officeLocation = settings?.Value<string>("officeLocation") ?? "";
+    var officePhone = settings?.Value<string>("officePhoneNumber") ?? "";
+    var officeEmail = settings?.Value<string>("officeEmail") ?? "";
+    var contactImg = settings?.Value<IPublishedContent>("contactImage")?.Url() ?? null;
+    var pageTitle = settings?.Value<string>("pageTitle") ?? "";
+
+}
+
+<section class="contact-section bg-gray">
+        <div class="container">
+            <div class="contact-card">
+                <div class="img-container">
+                    <img class="contact-person" src="@contactImg" alt="Contact person">
+                </div>
+                
+                <div class="contact-info">
+                    <h2>@pageTitle</h2>
+                    <div class="info">
+                        <i class="fa-regular fa-location-dot"></i>
+                        <p><span>Office location:</span><br> @officeLocation</p>
+                    </div>
+                    <div class="info">
+                        <i class="fa-regular fa-phone-flip"></i>
+                        <p><span>Phone number:</span><br> @officePhone</p>
+                    </div>
+                    <div class="info">
+                        <i class="fa-regular fa-envelope"></i>
+                        <p><span>Email address:</span><br> @officeEmail</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+

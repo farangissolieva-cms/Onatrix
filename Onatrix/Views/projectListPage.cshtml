@@ -1,0 +1,98 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "mainLayout.cshtml";
+	ViewBag.Title = Model?.Value("pageTitle") ?? null;
+
+	var selection = Umbraco.Content(Guid.Parse("03b5a2b9-8ad2-4866-bfef-b64a276dcdd1"))
+    .ChildrenOfType("projectItemTemplate")
+    .Where(x => x.IsVisible());
+
+    var itemPerPage = 4;
+    if (!int.TryParse(Context.Request.Query["page"], out int currentPage))
+        currentPage = 1;
+    var totalItems = selection?.Count() ?? 0;
+    var pageItem = selection?.Skip((currentPage-1)*itemPerPage).Take(itemPerPage);
+
+}
+
+ <section class="project">
+            
+	<div class="container ">
+		
+        @if (!string.IsNullOrEmpty(Model.Value("customHeadline").ToString())){
+			<div class="headline">
+                <h2>@Model.Value("customHeadline")</h2>
+             </div>
+		}
+        <div class="project-info">
+            <div class="project-cards">
+                @if (pageItem != null) {
+                    @foreach (var item in pageItem)
+                    {
+                        var projectDateString = item?.Value<string>("projectDate") ?? "";
+                        DateTime projectDate;
+                        var formattedDate = string.Empty;
+                       
+                        if (DateTime.TryParse(projectDateString, out projectDate))
+                        {
+                            formattedDate = projectDate.ToString("MMMM dd, yyyy");  
+                        }
+                        
+                        var image = item?.Value<IPublishedContent>("thumbnailImage")?.Url() ?? "";
+                        var preamble = item?.Value<string>("preable") ?? "";
+                                               
+                        <div class="project-card bg-light">
+                            <img src="@image" alt="@item.Name()">
+                            <div class="card-content">
+                                <h4>@item.Name()</h4>
+                                <div class="dateformat">
+                                    <p><i class="fa-regular fa-calendar-days"></i> @formattedDate</p>
+                                </div>
+                                <p>@preamble</p>
+                                <a href="@item.Url()">Read more <span><i class="fa-solid fa-arrow-right"></i></span></a>
+                            </div>
+                        </div>
+                        
+                    
+                    }
+                }
+            
+		    </div>
+
+            <section class="pagination">
+                <div class="pagination-container">
+
+                    @if (currentPage > 1) {
+                        <a href="?page=@(currentPage-1)" class="change">Prev</a>
+                    }
+                    else {
+                        <span class="change inactive">Prev</span>
+                    }
+
+                    <ul class="pages">
+                        @for (int i=1; i <= Math.Ceiling((decimal)totalItems / itemPerPage); i++) {
+                            <li class="@((i== currentPage) ? "number active" : "number")">
+                                <a href="?page=@i">@i</a>
+                            </li>
+                        }
+                    </ul>
+
+                    @if (currentPage < Math.Ceiling((decimal)totalItems / itemPerPage)) {
+                        <a href="?page=@(currentPage + 1)" class="change">Next</a>
+                    }
+                    else {
+                        <span class="change inactive">Next</span>
+                    }
+
+                </div>
+            </section>
+        </div>
+		<aside>
+            <h4>Tags</h4>
+             @await Html.PartialAsync("partials/static/projectTags.cshtml")
+             @await Html.PartialAsync("partials/static/helpForm.cshtml")
+        </aside>
+	</div>
+</section>
+ @await Html.PartialAsync("partials/static/contacts.cshtml")

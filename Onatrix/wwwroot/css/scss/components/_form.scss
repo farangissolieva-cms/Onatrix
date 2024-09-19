@@ -2,7 +2,7 @@
     width: 100%;
     display: grid;
     gap: 1rem;
-   
+    padding: 1rem;
     
     .input-group {
         display: grid;
@@ -39,4 +39,27 @@
         }
     }
 
+}
+
+.help-form {
+    padding: 1.7rem 1rem 0.8rem 1rem;
+    position: relative;
+    
+    h4 {
+        color: var(--color-accent) !important;
+    }
+
+    h4, p {
+        padding-left: 1rem;
+    }
+
+    p {
+        font-weight: 300;
+    }
+
+    .decoration-image {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
 }

@@ -1,0 +1,26 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+@{
+    var rootContents = UmbracoHelper.ContentAtRoot();
+    var settings = rootContents?.FirstOrDefault(x=> x.ContentType.Alias == "settingsPage") ?? null;
+    var formTitle = settings?.Value<string>("formTitle") ?? "";
+    var formInformation = settings?.Value<string>("formInformation") ?? "";
+    var decorImage = settings?.Value<IPublishedContent>("decorImage").Url() ?? null;
+}
+
+<div class="help-form bg-primary">
+   <h4>@formTitle</h4>
+   <p>@formInformation</p>
+    
+    <form action="#" method="post">
+        <div class="inputgroup">
+            <Input placeholder="Email address"/>
+            <i class="fa-sharp fa-light fa-envelope"></i>
+        </div>
+     </form>
+     @if (decorImage != null){
+        <img class="decoration-image" src="@decorImage" alt="decoration"/>
+     }
+    
+</div>

@@ -1,54 +1,58 @@
 .contact-section {
-    padding: $padding-medium $padding-small ;
+    padding: $padding-small;
+
     @include desktop {
-        padding: $padding-extra-large 0;
+        padding-top: $padding-large;
+        padding-bottom: 0;
     }
+
     .contact-card {
         display: grid;
         grid-template-columns: 1fr;
         align-items: center;
         gap: 40px;
         text-align: center;
-       
+
         @include desktop {
             grid-template-columns: 1fr 1fr;
         }
+
         .img-container {
-            position: relative;
             display: none;
-            
+
             @include tablet {
                 display: block;
             }
-            
-            z-index: 1;
-            .decor {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                z-index: -1;
-                
-            }
-            .contact-persion {
-                img {
-                    z-index: 5;
-                   
-                }
-            }
-            
         }
+
         .contact-info {
             margin: 0 auto;
+            text-align: center;
+
+            @include desktop {
+                text-align: left;
+            }
+
+            h2 {
+                width: 100%;
+
+                @include desktop {
+                    width: 70%;
+                }
+            }
+
             .info {
                 display: flex;
                 text-align: left;
                 gap: 8px;
+
                 i {
                     padding-top: 3px;
                     color: var(--color-secondary);
                 }
             }
         }
+
         span {
             color: var(--color-primary);
             font-weight: 700;

@@ -1,67 +1,67 @@
-.success-story {
-    padding-top: $padding-medium;
-    
+#success-story {
+  
+    padding-bottom: 40px;
+
+
     @include desktop {
-        padding: $padding-large 0;
         height: 800px;
     }
+
     .container {
-        padding: 0;
-        
+      
+        display: flex;
+        flex-direction: column;
         text-align: center;
         position: relative;
-        .success-metrics {
-            display: block;
-            @include tablet {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr; 
-            }
-            .metric {
-                padding: 20px;
-                p {
-                    width: 70%;
-                    margin: 0 auto;
-                }
-                h3 {
-                    font-size: 40px;
-                }
-                @include desktop {
-                    h3 {
-                        font-size: 100px;
-                        margin-bottom: 0;
-                    }
-                }
-            }
+
+        h2 {
+            color: var(--color-light);
         }
-        .background {
+
+        h1 {
+            font-size: 100px;
+            color: var(--color-secondary);
+            margin: 0;
+        }
+
+        p {
+            color: var(--color-light);
+            font-size: 18px;
+            margin: 0 40px;
+            padding-bottom: 40px;
+        }
+
+        .background-img {
             position: absolute;
             display: none;
             top: 15px;
             left: 50%;
-            transform: translateX(-50%); 
+            transform: translateX(-50%);
             z-index: 0;
+
             @include tablet {
                 display: block;
                 width: 80%;
             }
+
             @include desktop {
                 width: 100%;
             }
-            
         }
 
-        .success-img {
-           
+        img {
             position: absolute;
-            display: none;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, 35%);
+            left: 0; // Reset to the left edge
+            right: 0; // Reset to the right edge
+            margin: auto; // Center horizontally
+            max-width: 100%;
+            height: auto;
             z-index: 1;
+
+
             @include desktop {
                 display: block;
             }
-            
         }
     }
 }

@@ -4,10 +4,18 @@
 
 @inject IPublishedUrlProvider PublishedUrlProvider
 
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
 @{ 
     var selection = Model.Ancestors().ToArray(); 
     var homePageDisplayName = "Home";
     var isFirstItem = true;
+
+    var rootContents = UmbracoHelper.ContentAtRoot();
+    var settings = rootContents?.FirstOrDefault(x=> x.ContentType.Alias == "settingsPage") ?? null;
+    var leftDecor = settings?.Value<IPublishedContent>("breadcrumbDecorLeftside").Url() ?? null;
+    var rightDecor = settings?.Value<IPublishedContent>("breadcrumbDecorRightside").Url() ?? null;
 }
 
 <section class="page-title bg-gray">
@@ -28,4 +36,6 @@
             </ul>
         }
     </div>
+    <img class="decor-down" src="@leftDecor" alt="decor-globe-down" />
+    <img class="decor-up" src="@rightDecor" alt="decor-globe-up" />
 </section>

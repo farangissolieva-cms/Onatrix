@@ -1,0 +1,38 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "mainLayout.cshtml";
+    ViewBag.Title = Model?.Name;
+    var projectDateString = Model?.Value<string>("projectDate") ?? "";
+    DateTime projectDate;
+    var formattedDate = string.Empty;
+                       
+    if (DateTime.TryParse(projectDateString, out projectDate))
+    {
+        formattedDate = projectDate.ToString("MMMM dd, yyyy");  
+    }
+}
+
+<section class="project-detail">
+    <div class="container">
+        <div class="content">
+             
+             
+            <div class="dateformat">
+                <p><i class="fa-regular fa-calendar-days"></i> @formattedDate</p>
+            </div>
+            <div class="page-content">
+                @Model.Value("pageContent")
+            </div>
+             
+        </div>
+       
+        <aside>
+            <h4>Tags</h4>
+                @await Html.PartialAsync("partials/static/projectTags.cshtml")
+                @await Html.PartialAsync("partials/static/helpForm.cshtml")
+        </aside>
+    </div>
+    
+</section>
+ @await Html.PartialAsync("partials/static/contacts.cshtml")

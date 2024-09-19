@@ -1,0 +1,30 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@{
+    var items = Model?.Content.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("expertItemList");
+}
+
+@if (items != null) {
+<div class="team-members">
+   
+    @foreach (var item in items) {
+        
+        var expertImage = item?.Content.Value<IPublishedContent>("expertImage")?.Url();
+        var expertName = item?.Content.Value<string>("expertName") ?? "";
+        var expertTitle = item?.Content.Value<string>("expertTitle") ?? "";
+
+        <div class="team-member">
+            <img src="@expertImage" alt="@expertName">
+            <h4>@expertName</h4>
+            <p>@expertTitle</p>
+        </div>        
+        
+    
+    }
+  
+</div>
+}
+
+ 

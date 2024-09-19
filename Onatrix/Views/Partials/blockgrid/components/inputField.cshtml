@@ -1,0 +1,12 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+
+@{
+    var placeholder = Model?.Content.Value<string>("placeholder") ?? "";
+    var type = Model?.Content.Value<string>("type") ?? null;
+  
+}
+
+ <input class="input-group" type="@type" placeholder="@placeholder">
+
