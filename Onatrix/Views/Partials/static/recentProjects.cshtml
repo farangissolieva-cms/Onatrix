@@ -1,0 +1,38 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
+
+@{
+    var selection = Umbraco.Content(Guid.Parse("03b5a2b9-8ad2-4866-bfef-b64a276dcdd1"))
+        .ChildrenOfType("projectItemTemplate")
+        .Where(x => x.IsVisible())
+        .Select(x => new 
+        {
+            Content = x,
+            ProjectDate = DateTime.TryParse(x?.Value<string>("projectDate"), out var date) ? date : DateTime.MinValue
+        })
+        .OrderByDescending(x => x.ProjectDate)  
+        .Take(4)  
+        .ToList();  
+}
+
+<div class="recent-projects">
+    @foreach (var item in selection)
+    {
+        var projectContent = item.Content;
+        var formattedDate = item.ProjectDate != DateTime.MinValue 
+            ? item.ProjectDate.ToString("MMMM dd, yyyy") 
+            : string.Empty;
+        var image = projectContent?.Value<IPublishedContent>("thumbnailImage")?.Url() ?? "";
+
+        <div class="project-item">
+            <img src="@image" alt="@projectContent.Name()">
+            <div class="text-content">
+                <a href="@projectContent.Url()"><h6>@projectContent.Name()</h6></a>
+                <div class="dateformat">
+                    <p><i class="fa-regular fa-calendar-days"></i> @formattedDate</p>
+                </div>
+            </div>
+        </div>
+    } 
+</div>

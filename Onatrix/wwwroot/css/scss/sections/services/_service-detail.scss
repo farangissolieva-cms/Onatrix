@@ -1,8 +1,13 @@
 ﻿.service-detail {
     .container {
         display: grid;
-        grid-template-columns: 1fr 2fr;
-        padding: 3rem 0;
+        grid-template-columns: 1fr;
+        padding: 1rem;
+
+        @include desktop {
+            grid-template-columns: 1fr 2fr;
+            padding: 3rem 0;
+        }
 
         aside {
             .about-us-form {
@@ -28,6 +33,49 @@
 
                 img {
                     width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.question-form {
+    padding: 3rem 0;
+
+    .container {
+        form {
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+
+            @include tablet {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #form-question {
+                grid-column: span 2;
+                width: 100%;
+
+                input {
+                    display: block;
+                    width: 100%;
+                    height: 80px;
+                    
+                    &:focus {
+                        outline: none;
+                        border: 0.063rem solid var(--color-secondary);
+                    }
+                }
+            }
+
+            .button-container {
+                display: flex;
+                justify-content: left;
+                grid-column: span 1;
+                padding-top: 10px;
+
+                @include tablet {
+                    grid-column: span 2;
                 }
             }
         }

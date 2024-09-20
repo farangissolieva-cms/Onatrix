@@ -1,4 +1,6 @@
-﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+﻿@using Onatrix.ViewModels
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters
+@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
 
@@ -14,6 +16,17 @@
     var formTitle = serviceListPage?.Value<string>("formTitle") ?? "";
     var formImg = serviceListPage?.Value<IPublishedContent>("formImage")?.Url();
     var formDescription = serviceListPage?.Value<string>("formDescription") ?? "";
+
+    // Question form
+    var questionFormTitle = serviceListPage?.Value<string>("questionFormTitle") ?? "";
+    var buttonText = serviceListPage?.Value<string>("questionFormButtonText") ?? "";
+    var buttonColor = serviceListPage?.Value<ColorPickerValueConverter.PickedColor>("questionFormButtonBackgroundColor")?.Label.ToLower() ?? "";
+
+    var formViewModel = new QuestionFormViewModel
+    {
+        ButtonText = buttonText,
+        ButtonColorClassName = buttonColor!,
+    };
 }
 
 
@@ -35,4 +48,11 @@
         
     </div>
 </section>
+<section class="question-form">
+     <div class="container">
+        <h4>@questionFormTitle</h4>
+        <partial name="Partials/forms/questionFormPartial" model="formViewModel" />
+     </div>
+ </section>
+
  @await Html.PartialAsync("partials/static/contacts.cshtml")

@@ -1,0 +1,26 @@
+﻿@using Onatrix.ViewModels
+@model QuestionFormViewModel
+
+@using (Html.BeginUmbracoForm("QuestionForm", "FormSurface", FormMethod.Post, new { novalidate = "novalidate" }))
+{
+	<div class="input-group">
+		<input asp-for="Name" />
+		<span asp-validation-for="Name"></span>
+
+	</div>
+	<div id="form-email" class="input-group">
+		<input asp-for="Email" />
+		<span asp-validation-for="Email"></span>
+	</div>
+
+	<div id="form-question" class="input-group">
+		<input asp-for="Question" />
+		<span asp-validation-for="Question"></span>
+	</div>
+		
+	<div class="button-container input-group">
+		<button class="btn-@Model.ButtonColorClassName" type="submit">@Model.ButtonText</button>
+	</div>
+
+
+}

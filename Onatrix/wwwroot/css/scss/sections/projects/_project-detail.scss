@@ -1,8 +1,13 @@
 ﻿.project-detail {
     .container {
         display: grid;
-        grid-template-columns: 2fr 1fr;
-        padding: 3rem 0;
+        grid-template-columns: 1fr;
+        padding: 1rem;
+
+        @include desktop {
+            grid-template-columns: 2fr 1fr;
+            padding: 3rem 0;
+        }
 
         .content {
             display: flex;
@@ -11,11 +16,10 @@
             border-right: 2px solid var(--color-gray);
 
             .dateformat {
-                font-weight: 200;
+                font-weight: 300;
                 padding-bottom: 10px;
-
                 i {
-                    color: var(--color-gray-dark);
+                    font-weight: 300;
                 }
             }
 
@@ -33,7 +37,6 @@
             h4 {
                 margin: 0;
             }
-
         }
     }
 }

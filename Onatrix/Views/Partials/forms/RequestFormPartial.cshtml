@@ -1,0 +1,37 @@
+﻿@using Onatrix.ViewModels
+@model RequestFormViewModel 
+
+@using (Html.BeginUmbracoForm("RequestForm", "FormSurface", FormMethod.Post, new { novalidate = "novalidate" }))
+{
+	<div class="input-group">
+		<input asp-for="Name" />
+		<span asp-validation-for="Name"></span>
+		
+	</div>
+	<div id="form-email" class="input-group">
+		<input asp-for="Email" />
+		<span asp-validation-for="Email"></span>
+	</div>
+
+	<div id="form-phone" class="input-group">
+		<input asp-for="Phone" />
+		<span asp-validation-for="Phone"></span>
+	</div>
+
+	<div id="form-service" class="input-group">
+		<div class="inputgroup">
+			<select id="service" name="SelectedServiceId">
+				@foreach (var service in Model.Services)
+				{
+					<option value="@service.Value">@service.Text</option>
+				}
+			</select>
+			<i class="fa-regular fa-chevron-down"></i>
+		</div>
+	</div>
+	<div class="button-container input-group">
+		<button class="btn-@Model.ButtonColorClassName" type="submit">@Model.ButtonText</button>
+	</div>	
+	
+	
+}

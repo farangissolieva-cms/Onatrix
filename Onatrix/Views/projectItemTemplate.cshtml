@@ -22,15 +22,17 @@
                 <p><i class="fa-regular fa-calendar-days"></i> @formattedDate</p>
             </div>
             <div class="page-content">
-                @Model.Value("pageContent")
+                @Model!.Value("pageContent")
             </div>
              
         </div>
        
         <aside>
+            <h4>Recent Projects</h4>
+            @await Html.PartialAsync("partials/static/recentProjects.cshtml")
             <h4>Tags</h4>
-                @await Html.PartialAsync("partials/static/projectTags.cshtml")
-                @await Html.PartialAsync("partials/static/helpForm.cshtml")
+            @await Html.PartialAsync("partials/static/projectTags.cshtml")
+            @await Html.PartialAsync("partials/static/helpForm.cshtml")
         </aside>
     </div>
     

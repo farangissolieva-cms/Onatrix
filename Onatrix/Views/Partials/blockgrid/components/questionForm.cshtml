@@ -1,0 +1,27 @@
+﻿@using Onatrix.ViewModels
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters
+@using Umbraco.Cms.Web.Common
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper;  
+
+
+@{
+    var formTitle = Model.Content.Value<string>("formTitle") ?? "";
+    var buttonText = Model.Content.Value<string>("buttonText") ?? "";
+    var buttonColor = Model?.Content.Value<ColorPickerValueConverter.PickedColor>("buttonBackgroundColor")?.Label.ToLower() ?? "";
+  
+    var formViewModel = new QuestionFormViewModel
+    {
+        ButtonText = buttonText,
+        ButtonColorClassName = buttonColor!,
+      
+    };
+   
+}
+<div class="question-form">
+    <h2>@formTitle</h2>
+     
+    <partial name="Partials/forms/questionFormPartial" model="formViewModel" />
+</div>

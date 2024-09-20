@@ -1,0 +1,55 @@
+﻿@using Onatrix.ViewModels
+@using Umbraco.Cms.Core.PropertyEditors.ValueConverters
+@using Umbraco.Cms.Web.Common
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper;  
+
+
+@{
+    var formTitle = Model.Content.Value<string>("formTitle") ?? "";
+    var formHeadline = Model.Content.Value<string>("headline") ?? "";
+    var formDescription = Model.Content.Value<string>("formDescription") ?? "";
+    var formType = Model.Content.Value<string>("formType") ?? "";
+    var buttonText = Model.Content.Value<string>("buttonText") ?? "";
+    var buttonColor = Model?.Content.Value<ColorPickerValueConverter.PickedColor>("buttonBackgroundColor")?.Label.ToLower() ?? "";
+
+
+    var nodeGuid = new Guid("e9938c0e-2868-425c-af11-5e5794ed4593");
+    var content = UmbracoHelper.Content(nodeGuid);
+
+    var serviceList = content!.Children.Select(child => new SelectListItem
+            {
+                Value = child.Id.ToString(),
+                Text = child.Name
+            }).ToList();
+
+    var formViewModel = new RequestFormViewModel
+    {
+        ButtonText = buttonText,
+        ButtonColorClassName = buttonColor!,
+        Services = serviceList
+
+    };
+
+    var formClass = formType == "Contact Page Form" ? "contact-callback-form" : "callback-form";
+    var isContactForm = formType == "Contact Page Form";
+}
+<div class="@formClass">
+    @if (isContactForm)
+    {
+        <h6>@formTitle</h6>
+        <h2>@formHeadline</h2>
+    }
+    else
+    {
+        <div class="form-title bg-primary">
+            <h3>@formHeadline</h3>
+        </div>
+    }
+
+    <p>@formDescription</p>
+
+    <partial name="Partials/forms/requestFormPartial" model="formViewModel" />
+</div>

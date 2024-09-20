@@ -122,3 +122,10 @@ quotation {
         grid-column-end: span min(var(--umb-block-grid--area-column-span, 1), var(--umb-block-grid--area-grid-columns));
     }
 }
+
+.field-validation-error {
+    color: var(--color-danger-dark);
+    font-size: 0.9rem;
+    text-align: left;
+    font-weight: 400;
+}
