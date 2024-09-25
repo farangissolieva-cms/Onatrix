@@ -1,11 +1,17 @@
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 builder.CreateUmbracoBuilder()
 	.AddBackOffice()
 	.AddWebsite()
 	.AddDeliveryApi()
 	.AddComposers()
-    .AddAzureBlobMediaFileSystem()
+    .AddAzureBlobMediaFileSystem(options =>
+    {
+        // Retrieve Azure Blob Storage settings from configuration
+        options.ConnectionString = configuration["AzureBlob:Media:ConnectionString"]!;
+        options.ContainerName = configuration["AzureBlob:Media:ContainerName"]!;
+    })
     .AddAzureBlobImageSharpCache()
     .Build();
 
