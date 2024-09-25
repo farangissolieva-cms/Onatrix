@@ -6,6 +6,7 @@ builder.CreateUmbracoBuilder()
 	.AddWebsite()
 	.AddDeliveryApi()
 	.AddComposers()
+	// umbraco storage
     .AddAzureBlobMediaFileSystem(options =>
     {
         options.ConnectionString = configuration["Umbraco:Storage:AzureBlob:Media:ConnectionString"]!;
