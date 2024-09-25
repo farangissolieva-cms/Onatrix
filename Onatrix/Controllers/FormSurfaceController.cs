@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
 using Onatrix.ViewModels;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Cache;
@@ -32,4 +31,12 @@ public class FormSurfaceController : SurfaceController
 		return RedirectToCurrentUmbracoPage();
 	}
 
+    [HttpPost]
+    public IActionResult QuestiontForm(QuestionFormViewModel form)
+    {
+        if (!ModelState.IsValid)
+            return CurrentUmbracoPage();
+
+        return RedirectToCurrentUmbracoPage();
+    }
 }
