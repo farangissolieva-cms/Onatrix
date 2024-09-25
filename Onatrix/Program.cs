@@ -8,9 +8,8 @@ builder.CreateUmbracoBuilder()
 	.AddComposers()
     .AddAzureBlobMediaFileSystem(options =>
     {
-        // Retrieve Azure Blob Storage settings from configuration
-        options.ConnectionString = configuration["AzureBlob:Media:ConnectionString"]!;
-        options.ContainerName = configuration["AzureBlob:Media:ContainerName"]!;
+        options.ConnectionString = configuration["Umbraco:Storage:AzureBlob:Media:ConnectionString"]!;
+        options.ContainerName = configuration["Umbraco:Storage:AzureBlob:Media:ContainerName"]!;
     })
     .AddAzureBlobImageSharpCache()
     .Build();
