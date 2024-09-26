@@ -21,6 +21,6 @@ public class QuestionFormViewModel
 	[DataType(DataType.MultilineText)]
 	public string Question { get; set; } = null!;
 
-	public string ButtonText { get; set; } = null!;
-	public string ButtonColorClassName { get; set; } = null!;
+	public string? ButtonText { get; set; }
+	public string? ButtonColorClassName { get; set; }
 }

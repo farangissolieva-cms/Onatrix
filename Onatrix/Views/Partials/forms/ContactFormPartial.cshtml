@@ -1,0 +1,24 @@
+﻿@using Onatrix.ViewModels
+@model ContactFormViewModel
+
+@using (Html.BeginUmbracoForm("ContactForm", "FormSurface", FormMethod.Post, new { novalidate = "novalidate", id = "contactForm" }))
+{
+	 <div class="inputgroup">
+        <Input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+        <i class="fa-sharp fa-light fa-envelope"></i>
+    </div>
+
+}
+
+<script>
+   
+    document.getElementById("contactForm").addEventListener("keypress", function(event) {
+       
+        if (event.key === "Enter") {
+            event.preventDefault(); 
+            
+            this.submit(); 
+        }
+    });
+</script>

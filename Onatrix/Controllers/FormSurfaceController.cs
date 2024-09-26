@@ -13,16 +13,12 @@ using Umbraco.Cms.Web.Website.Controllers;
 
 namespace Onatrix.Controllers;
 
-public class FormSurfaceController : SurfaceController
+public class FormSurfaceController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider) : SurfaceController(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
 {
     private readonly string _serviceBusConnectionString = "Endpoint=sb://servicebus-onatrix.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=tZ8FxaI+5S1t9YaMqXAARjUvzKSMQvDGx+ASbPD/y6o=";
-    private readonly string _queueName = "email_request"; 
-    public FormSurfaceController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider) : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
-	{
-		
-	}
+    private readonly string _queueName = "email_request";
 
-	[HttpPost]
+    [HttpPost]
 	public async Task<IActionResult> RequestForm(RequestFormViewModel form)
 	{
 		if (!ModelState.IsValid)
@@ -32,7 +28,7 @@ public class FormSurfaceController : SurfaceController
         {
             To = form.Email,
             Subject = "Request Form Confirmation",
-            HtmlBody = $"<p>Dear {form.Name} thank you for your request! We will soon contact you. With best regards, Onatrix Team</p>", 
+            HtmlBody = $"<p>Dear <strong>{form.Name}</strong> thank you for your request! We will soon contact you. With best regards, Onatrix Team</p>", 
             PlainText = $"Dear {form.Name} thank you for your request! We will soon contact you. With best regards, Onatrix Team"
         };
 
@@ -42,7 +38,7 @@ public class FormSurfaceController : SurfaceController
 	}
 
     [HttpPost]
-    public async Task<IActionResult> QuestiontForm(QuestionFormViewModel form)
+    public async Task<IActionResult> QuestionForm(QuestionFormViewModel form)
     {
         if (!ModelState.IsValid)
             return CurrentUmbracoPage();
@@ -51,7 +47,7 @@ public class FormSurfaceController : SurfaceController
         {
             To = form.Email,
             Subject = "Question Form Confirmation",
-            HtmlBody = $"<p>Dear {form.Name} thank you for your question! We will soon contact you. With best regards, Onatrix Team</p>",
+            HtmlBody = $"<p>Dear <strong>{form.Name}</strong>, thank you for your question! We will soon contact you. With best regards, Onatrix Team</p>",
             PlainText = $"Dear {form.Name} thank you for your question! We will soon contact you. With best regards, Onatrix Team"
         };
 
@@ -60,17 +56,35 @@ public class FormSurfaceController : SurfaceController
         return RedirectToCurrentUmbracoPage();
     }
 
-    private async Task SendMessageToServiceBusAsync(EmailRequest emailRequest)
+	[HttpPost]
+	public async Task<IActionResult> ContactForm(ContactFormViewModel form)
+	{
+		if (!ModelState.IsValid)
+			return CurrentUmbracoPage();
+
+		var emailRequest = new EmailRequest
+		{
+			To = form.Email,
+			Subject = "Contact Form Confirmation",
+			HtmlBody = $"<p>Dear User, thank you for contacting us! We will soon provide help. With best regards, Onatrix Team</p>",
+			PlainText = $"Dear User, thank you for contacting us! We will soon provide help. With best regards, Onatrix Team"
+		};
+
+		await SendMessageToServiceBusAsync(emailRequest);
+
+		return RedirectToCurrentUmbracoPage();
+	}
+
+
+	private async Task SendMessageToServiceBusAsync(EmailRequest emailRequest)
     {
-        
-        await using (var client = new ServiceBusClient(_serviceBusConnectionString))
-        {
-            ServiceBusSender sender = client.CreateSender(_queueName);
-            var jsonMessage = JsonConvert.SerializeObject(emailRequest);
-            ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes(jsonMessage));
-                      
-            await sender.SendMessageAsync(message);
-        }
+
+        await using var client = new ServiceBusClient(_serviceBusConnectionString);
+        ServiceBusSender sender = client.CreateSender(_queueName);
+        var jsonMessage = JsonConvert.SerializeObject(emailRequest);
+        ServiceBusMessage message = new(Encoding.UTF8.GetBytes(jsonMessage));
+
+        await sender.SendMessageAsync(message);
     }
 }
 public class EmailRequest

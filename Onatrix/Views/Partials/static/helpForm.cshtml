@@ -1,4 +1,5 @@
-﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+﻿@using Onatrix.ViewModels
+@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
 @inject Umbraco.Cms.Web.Common.UmbracoHelper UmbracoHelper
 @{
@@ -6,21 +7,18 @@
     var settings = rootContents?.FirstOrDefault(x=> x.ContentType.Alias == "settingsPage") ?? null;
     var formTitle = settings?.Value<string>("formTitle") ?? "";
     var formInformation = settings?.Value<string>("formInformation") ?? "";
-    var decorImage = settings?.Value<IPublishedContent>("decorImage").Url() ?? null;
+    var decorImage = settings?.Value<IPublishedContent>("decorImage")!.Url() ?? null;
+    var formViewModel = new ContactFormViewModel();
 }
 
 <div class="help-form bg-primary">
    <h4>@formTitle</h4>
    <p>@formInformation</p>
-    
-    <form action="#" method="post">
-        <div class="inputgroup">
-            <Input placeholder="Email address"/>
-            <i class="fa-sharp fa-light fa-envelope"></i>
-        </div>
-     </form>
-     @if (decorImage != null){
-        <img class="decoration-image" src="@decorImage" alt="decoration"/>
-     }
+   <partial name="Partials/forms/contactFormPartial" model="formViewModel" />
+     
+    @if (decorImage != null){
+    <img class="decoration-image" src="@decorImage" alt="decoration"/>
+    }
     
 </div>
+
