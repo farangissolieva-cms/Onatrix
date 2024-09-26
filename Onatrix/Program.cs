@@ -6,13 +6,6 @@ builder.CreateUmbracoBuilder()
 	.AddWebsite()
 	.AddDeliveryApi()
 	.AddComposers()
-	// umbraco storage
-    .AddAzureBlobMediaFileSystem(options =>
-    {
-        options.ConnectionString = configuration["Umbraco:Storage:AzureBlob:Media:ConnectionString"]!;
-        options.ContainerName = configuration["Umbraco:Storage:AzureBlob:Media:ContainerName"]!;
-    })
-    .AddAzureBlobImageSharpCache()
     .Build();
 
 WebApplication app = builder.Build();
