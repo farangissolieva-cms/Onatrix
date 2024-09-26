@@ -11,20 +11,32 @@
     {
         formattedDate = projectDate.ToString("MMMM dd, yyyy");  
     }
+
+     var currentProjectTags = Model?.Value<IEnumerable<string>>("tags") ?? Enumerable.Empty<string>();
 }
 
 <section class="project-detail">
     <div class="container">
         <div class="content">
-             
-             
+                        
             <div class="dateformat">
                 <p><i class="fa-regular fa-calendar-days"></i> @formattedDate</p>
             </div>
             <div class="page-content">
                 @Model!.Value("pageContent")
             </div>
-             
+            
+            @if (currentProjectTags.Any())
+            {
+                <div class="tags-list">
+                    @foreach (var tag in currentProjectTags)
+                    {
+                        <div class="tag">@tag</div>
+                    }
+                </div>
+            }
+
+            
         </div>
        
         <aside>

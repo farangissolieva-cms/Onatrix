@@ -1566,6 +1566,10 @@ footer .container p {
 .project-detail .container .content img {
   width: 100%;
 }
+.project-detail .container .content .tags-list .tag {
+  padding: 0.2rem 0.8rem;
+  background-color: var(--color-accent);
+}
 .project-detail .container aside {
   padding: 0 4rem;
   display: flex;

@@ -30,6 +30,6 @@ public class RequestFormViewModel
 
 	public List<SelectListItem> Services { get; set; } = [];
 
-    public string ButtonText { get; set; } = null!;
-    public string ButtonColorClassName { get; set; } = null!;
+    public string? ButtonText { get; set; }
+    public string? ButtonColorClassName { get; set; }
 }
