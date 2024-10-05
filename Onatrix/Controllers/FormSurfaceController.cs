@@ -13,10 +13,25 @@ using Umbraco.Cms.Web.Website.Controllers;
 
 namespace Onatrix.Controllers;
 
-public class FormSurfaceController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider) : SurfaceController(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
+public class FormSurfaceController : SurfaceController
 {
-    private readonly string _serviceBusConnectionString = "Endpoint=sb://servicebus-onatrix.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=tZ8FxaI+5S1t9YaMqXAARjUvzKSMQvDGx+ASbPD/y6o=";
-    private readonly string _queueName = "email_request";
+    private readonly string _serviceBusConnectionString;
+    private readonly string _queueName;
+    private readonly IConfiguration _configuration;
+
+    public FormSurfaceController(IUmbracoContextAccessor umbracoContextAccessor, 
+                                IUmbracoDatabaseFactory databaseFactory, 
+                                ServiceContext services, 
+                                AppCaches appCaches, 
+                                IProfilingLogger profilingLogger, 
+                                IPublishedUrlProvider publishedUrlProvider,
+                                IConfiguration configuration) : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
+    {
+        _configuration = configuration;
+        _serviceBusConnectionString = _configuration["AzureServiceBus:ConnectionString"]!;
+        _queueName = _configuration["AzureServiceBus:QueueName"]!;
+       
+    }
 
     [HttpPost]
 	public async Task<IActionResult> RequestForm(RequestFormViewModel form)
@@ -56,27 +71,27 @@ public class FormSurfaceController(IUmbracoContextAccessor umbracoContextAccesso
         return RedirectToCurrentUmbracoPage();
     }
 
-	[HttpPost]
-	public async Task<IActionResult> ContactForm(ContactFormViewModel form)
-	{
-		if (!ModelState.IsValid)
-			return CurrentUmbracoPage();
+    [HttpPost]
+    public async Task<IActionResult> ContactForm(ContactFormViewModel form)
+    {
+        if (!ModelState.IsValid)
+            return CurrentUmbracoPage();
 
-		var emailRequest = new EmailRequest
-		{
-			To = form.Email,
-			Subject = "Contact Form Confirmation",
-			HtmlBody = $"<p>Dear User, thank you for contacting us! We will soon provide help. With best regards, Onatrix Team</p>",
-			PlainText = $"Dear User, thank you for contacting us! We will soon provide help. With best regards, Onatrix Team"
-		};
+        var emailRequest = new EmailRequest
+        {
+            To = form.Email,
+            Subject = "Contact Form Confirmation",
+            HtmlBody = $"<p>Dear User, thank you for contacting us! We will soon provide help. With best regards, Onatrix Team</p>",
+            PlainText = $"Dear User, thank you for contacting us! We will soon provide help. With best regards, Onatrix Team"
+        };
 
-		await SendMessageToServiceBusAsync(emailRequest);
+        await SendMessageToServiceBusAsync(emailRequest);
 
-		return RedirectToCurrentUmbracoPage();
-	}
+        return RedirectToCurrentUmbracoPage();
+    }
 
 
-	private async Task SendMessageToServiceBusAsync(EmailRequest emailRequest)
+    private async Task SendMessageToServiceBusAsync(EmailRequest emailRequest)
     {
 
         await using var client = new ServiceBusClient(_serviceBusConnectionString);
